@@ -3,8 +3,9 @@ on:
   workflow_call:
    inputs:
      target:
-        required: true
         type: string
+        required: false
+        default: "."
 jobs:
   generate-tfdocs:
     runs-on: ubuntu-latest
@@ -16,7 +17,7 @@ jobs:
     - name: Render terraform docs inside the README.md and push changes back to PR branch
       uses: terraform-docs/gh-actions@v1.2.0
       with:
-        working-dir: ./modules/${{ inputs.target }}
+        working-dir: ${{ inputs.target }}
         output-file: README.md
         output-method: inject
         git-push: "true"
